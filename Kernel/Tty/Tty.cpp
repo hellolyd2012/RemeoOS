@@ -1,42 +1,49 @@
+// 创建于2024.10.12
+// RemeoOS Kernel Tty
+
 #include <RemeoOS/Tty/Tty.hpp>
 #include <stdint.h>
+
 #define TTY_WIDTH 80
 #define TTY_HEIGHT 25
+
 VgaTypes *Buffer = (VgaTypes *)0xB8000;
 VgaTypes ThemeColor = VGA_COLOR_BLACK;
 
-uint32_t TTY_COLUMN = 0;
-uint16_t TTY_ROW = 0;
+uint32_t Tty_Column = 0;
+uint16_t Tty_Row = 0;
 
 void Tty_Set_Theme(VgaTypes fg, VgaTypes bg) 
 {
     ThemeColor = (bg << 4 | fg) << 8;
 }
+
 void Tty_Put_Char(char chr) 
 {
     if (chr == '\n') {
-        TTY_COLUMN = 0;
-        TTY_ROW++;
+        Tty_Column = 0;
+        Tty_Row++;
     }
     else if (chr == '\r') 
     {
-        TTY_COLUMN = 0;
+        Tty_Column = 0;
     }
     else {
-        *(Buffer + TTY_COLUMN + TTY_ROW * TTY_WIDTH) = (ThemeColor | chr);
-        TTY_COLUMN++;
-        if (TTY_COLUMN >= TTY_WIDTH) 
+        *(Buffer + Tty_Column + Tty_Row * TTY_WIDTH) = (ThemeColor | chr);
+        Tty_Column++;
+        if (Tty_Column >= TTY_WIDTH) 
         {
-            TTY_COLUMN = 0;
-            TTY_ROW++;
+            Tty_Column = 0;
+            Tty_Row++;
         }
     }
-    if (TTY_ROW >= TTY_HEIGHT) 
+    if (Tty_Row >= TTY_HEIGHT) 
     {
         Tty_Scroll_Up();
-        TTY_ROW--;
+        Tty_Row--;
     } 
 }
+
 void Tty_Put_Str(char* str) 
 {
     while (*str != '\0') 
@@ -45,6 +52,7 @@ void Tty_Put_Str(char* str)
         str++;
     }
 }
+
 void Tty_Scroll_Up() 
 {
     // TODO use memcpy

@@ -1,3 +1,6 @@
+// 创建于2024.10.12
+// RemeoOS 内核入口
+
 #include <RemeoOS/Tty/Tty.hpp>
 #include <RemeoOS/Arch/X86/Gdt.hpp>
 
