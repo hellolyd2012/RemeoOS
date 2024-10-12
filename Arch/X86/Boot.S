@@ -1,31 +1,51 @@
-#include "MultiBoot.h"
+// 创建于2024.10.12
+// RemeoOS X86 BootLoader
+
+#include <RemeoOS/Arch/X86/MultiBoot.hpp>
+
+.extern _KernelInit
+.extern _KernelMain
 
 .section .MultiBoot
     .long MAGIC
-    .long ALI
-    .long CHECKSUM(ALI)
+    .long ALi
+    .long CHECKSUM(ALi)
 
 .section .bss
     .align 16
-    stack_bottom:
+    StackBottom:
+    StackTop:
         .skip 16318, 0
-    stack_top:
 
 .section .text
-    .global boot_
-    .type boot_, @function
+    .global boot
+    .type boot, @function
+    boot:
+        movl $StackTop, %esp
 
-    boot_:
-        movl $stack_top, %esp
-        /* 
-            TODO: kernel init
-                1. Load GDT
-                2. Load IDT
-                3. Enable paging
-        */
         call _KernelInit
 
+        subl $0x6, %esp
+        movl $_Gdt, 2(%esp)
+        movw _Gdt_Limit, %ax
+        movw %ax, (%esp)
+        lgdt (%esp)
+        addl $0x6, %esp
+        
+        movw $0x10, %cx
+        movw %cx, %es
+        movw %cx, %ds
+        movw %cx, %fs
+        movw %cx, %gs
+        movw %cx, %ss
+
+        pushw $0x08
+        pushl $_After_Gdt
+        retf
+
+    _After_Gdt:
         pushl %ebx
+
         call _KernelMain
 
         cli
