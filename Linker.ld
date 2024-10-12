@@ -1,9 +1,10 @@
-ENTRY(boot_)
-SECTIONS {
+ENTRY(boot)
 
+SECTIONS {
     . = 0x100000;
+
     .text BLOCK(4K) : {
-        * (.multiboot)
+        * (.MultiBoot)
         * (.text)
     }
 
@@ -15,7 +16,7 @@ SECTIONS {
     .data BLOCK(4k) : {
         * (.data)
     }
-    
+
     .rodata BLOCK(4K) : {
         * (.rodata)
     }
