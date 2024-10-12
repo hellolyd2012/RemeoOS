@@ -1,3 +1,5 @@
+// 创建于2024.10.12
+// RemeoOS Tty头文件
 
 typedef unsigned short VgaTypes;
 
