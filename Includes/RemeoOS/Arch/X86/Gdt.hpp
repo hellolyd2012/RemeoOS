@@ -33,20 +33,20 @@
 #define Seg_Code_Exrdc 0x0E
 #define Seg_Code_Exrdca 0x0F
 
-#define Seg_R0_Code     SD_Type(Seg_Code_Exrd) | Sd_Code_Data(1) | Sd_DPL(0) | \
-                        Sd_Present(1) | SdAvl(0) | Sd_64Bits(0) | Sd_32Bits(1) | \
+#define Seg_R0_Code     SD_Type(Seg_Code_Exrd)   | Sd_Code_Data(1) | Sd_DPL(0)    | \
+                        Sd_Present(1) | SdAvl(0) | Sd_64Bits(0)    | Sd_32Bits(1) | \
                         Sd_4k_Gran(1)  
 
-#define Seg_R0_Data     SD_Type(Seg_Code_Exrd) | Sd_Code_Data(1) | Sd_DPL(0) | \
-                        Sd_Present(1) | SdAvl(0) | Sd_64Bits(0) | Sd_32Bits(1) | \
+#define Seg_R0_Data     SD_Type(Seg_Data_Rdwr)   | Sd_Code_Data(1) | Sd_DPL(0)    | \
+                        Sd_Present(1) | SdAvl(0) | Sd_64Bits(0)    | Sd_32Bits(1) | \
                         Sd_4k_Gran(1)
 
-#define Seg_R3_Code     SD_Type(Seg_Code_Exrd) | Sd_Code_Data(1) | Sd_DPL(0) | \
-                        Sd_Present(1) | SdAvl(0) | Sd_64Bits(0) | Sd_32Bits(1) | \
+#define Seg_R3_Code     SD_Type(Seg_Code_Exrd)   | Sd_Code_Data(1) | Sd_DPL(3)    | \
+                        Sd_Present(1) | SdAvl(0) | Sd_64Bits(0)    | Sd_32Bits(1) | \
                         Sd_4k_Gran(1)
 
-#define Seg_R3_Data     SD_Type(Seg_Code_Exrd) | Sd_Code_Data(1) | Sd_DPL(0) | \
-                        Sd_Present(1) | SdAvl(0) | Sd_64Bits(0) | Sd_32Bits(1) | \
+#define Seg_R3_Data     SD_Type(Seg_Data_Rdwr)   | Sd_Code_Data(1) | Sd_DPL(3)    | \
+                        Sd_Present(1) | SdAvl(0) | Sd_64Bits(0)    | Sd_32Bits(1) | \
                         Sd_4k_Gran(1)
 
 
