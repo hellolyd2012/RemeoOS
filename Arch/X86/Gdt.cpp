@@ -1,3 +1,6 @@
+// 创建于2024.10.13
+// RemeoOS GDT
+
 #include <RemeoOS/Arch/X86/Gdt.hpp>
 #include <stdint.h>
 
