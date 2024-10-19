@@ -1,5 +1,8 @@
 {
     "files.associations": {
         "tty.h": "c"
+    },
+    "aide.convertLanguagePairs": {
+        "makefile": "ini"
     }
 }
