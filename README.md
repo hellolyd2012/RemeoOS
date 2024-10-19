@@ -33,7 +33,3 @@ RemeoOS 是一个不基于任何现有操作系统的操作系统
 
 在项目根目录下执行 `make debug-qemu` 即可进入 QEMU 调试模式
 
-##### BOCHS
-
-在项目根目录下执行 `make debug-bochs` 即可进入 BOCHS 调试模式
-
