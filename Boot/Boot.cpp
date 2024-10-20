@@ -19,9 +19,12 @@ extern "C" EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_T
     SwitchToResolution(SCR_X, SCR_Y);
 
     puts((unsigned short *)L"RemeoOS BootLoader V0.1");
+    puts((unsigned short *)L"\n");
     puts((unsigned short *)L"Loading Kernel...");
-
-    puts((unsigned short *)"[ SUCCESS ] Initializing UEFI\r\n");
+    puts((unsigned short *)L"\n");
+    
+    puts((unsigned short *)"[SUCCESS] Initializing UEFI\r\n");
+    puts((unsigned short *)L"\n");
 
     EFI_STATUS                status;
     EFI_PHYSICAL_ADDRESS      entry_addr;
@@ -34,17 +37,19 @@ extern "C" EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_T
     // 断言是否成功打开文件系统
     if (EFI_ERROR(status)) 
     {
-        puts((unsigned short *)L"[ FAIL ] Loading File System\r\n");
+        puts((unsigned short *)L"[FAIL] Loading File System\r\n");
+        puts((unsigned short *)L"\n");
         while (1);
     }
-    puts((unsigned short *)L"[ SUCCESS ] Loading File System\r\n");
+    puts((unsigned short *)L"[SUCCESS] Loading File System\r\n");
+    puts((unsigned short *)L"\n");
     
     // 设置内核
     status = root->Open(root, &kernel_file, (CHAR16 *)"\\kernel.elf", EFI_FILE_MODE_READ, 0);
     // 断言是否设置内核
     if (EFI_ERROR(status)) 
     {
-        puts((unsigned short *)L"[ FAIL ] Loading OS Files\r\n");
+        puts((unsigned short *)L"[FAIL] Loading OS Files\r\n");
         while (1)
         {
             
@@ -55,10 +60,12 @@ extern "C" EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_T
     // 断言是否成功读取内核
     if (EFI_ERROR(status)) 
     {
-        puts((unsigned short *)L"[ FAIL ] Loading OS Files\r\n");
+        puts((unsigned short *)L"[FAIL] Loading OS Files\r\n");
+        puts((unsigned short *)L"\n");
         while (1);
     }
-    puts((unsigned short *)L"[ SUCCESS ] Loading OS Files\r\n");
+    puts((unsigned short *)L"[SUCCESS] Loading OS Files\r\n");
+    puts((unsigned short *)L"\n");
 
     Elf64_Ehdr *ehdr = (Elf64_Ehdr *)kernel_buffer;
     UINT64      kernel_first_addr, kernel_last_addr;                   // 计算的首尾
@@ -84,9 +91,11 @@ extern "C" EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_T
         default:
             // 断言是否成功获取屏幕信息
             puts((unsigned short *)L"[ FAIL ] Loading Graphics\r\n");
+            puts((unsigned short *)L"\n");
             while (1);
     }
     puts((unsigned short *)L"[ SUCCESS ] Loading Graphics\r\n");
+    puts((unsigned short *)L"\n");
     
     BOOT_CONFIG BootConfig;
     BootConfig.MemoryMap.MapSize = 4096;
@@ -98,10 +107,12 @@ extern "C" EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_T
     // 获取内存信息
     GetMMP(&BootConfig.MemoryMap);
     puts((unsigned short *)L"[ SUCCESS ] Getting Memory Map\r\n");
+    puts((unsigned short *)L"\n");
     
     // 跳转至内核
     Kernel kernel = (Kernel)entry_addr;
     puts((unsigned short *)L"Operating System Boot Success.\r\n");
+    puts((unsigned short *)L"\n");
     kernel(&config, SystemTable, &BootConfig); // 跳转至内核
 
     while (1)
