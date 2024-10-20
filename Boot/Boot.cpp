@@ -9,7 +9,7 @@
 #include <Exec/Elf.hpp>
 #pragma once // 确保只包含一次
 
-EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_TABLE *SystemTable) 
+extern "C" EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_TABLE *SystemTable) 
 {
     // 初始化UEFI
     efi_init(ImageHandle, SystemTable);
