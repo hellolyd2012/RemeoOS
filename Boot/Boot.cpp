@@ -9,7 +9,7 @@
 #include <Exec/Elf.hpp>
 #pragma once // 确保只包含一次
 
-EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_TABLE *SystemTable) 
+extern "C" EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_TABLE *SystemTable) 
 {
     // 初始化UEFI
     efi_init(ImageHandle, SystemTable);
@@ -45,7 +45,7 @@ EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_TABLE *Syste
     puts((unsigned short *)L"\n");
     
     // 设置内核
-    status = root->Open(root, &kernel_file, (CHAR16 *)"\\Kernel.elf", EFI_FILE_MODE_READ, 0);
+    status = root->Open(root, &kernel_file, (CHAR16 *)L"\\Kernel.elf", EFI_FILE_MODE_READ, 0);
     // 断言是否设置内核
     if (EFI_ERROR(status)) 
     {
