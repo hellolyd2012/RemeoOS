@@ -19,10 +19,6 @@ struct FrameBufferConfig {
     enum PixelFormat pixel_format;
 };
 
-struct FrameBufferConfig config = 
-{
-    (UINT8 *)GOP->Mode->FrameBufferBase, GOP->Mode->Info->PixelsPerScanLine,
-    GOP->Mode->Info->HorizontalResolution, GOP->Mode->Info->VerticalResolution    
-};
+
 
 #endif
