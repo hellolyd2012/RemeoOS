@@ -114,9 +114,7 @@ extern "C" EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_T
     puts((unsigned short *)L"Operating System Boot Success.\r\n");
     puts((unsigned short *)L"\n");
     kernel(&config, SystemTable, &BootConfig); // 跳转至内核
-
-    while (1)
-    {
-        
-    }  
+    
+    // 内核退出关机
+    ST->RuntimeServices->ResetSystem(EfiResetShutdown, EFI_SUCCESS, 0, NULL);
 }
