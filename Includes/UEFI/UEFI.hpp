@@ -20,6 +20,24 @@ typedef char BOOLEAN;
 
 #define PT_LOAD 1 // PT_LOAD值不变
 
+enum EFI_RESET_TYPE {
+    EfiResetCold,
+        /* 冷重启，将系统所有电路设为初始状态
+         * 相当于断电再重新通电 */
+    EfiResetWarm,
+        /* 热重启，重新初始化系统，CPU被置为初始状态
+         * 相当于不断电重启
+         * 如果系统不支持，则执行EfiResetCold */
+    EfiResetShutdown,
+        /* 关机, 将计算机置于ACPI G2/S5(软关机)或是G3(断电)状态
+         * 注: G2/S5和G3的区别在于前者仍有通电部分, 例如ATX规范中用于开机的+5VSB电路 
+         * 如果系统不支持, 则在下次重启时, 它将表现出EfiResetCold的行为 */
+    EfiResetPlatformSpecific
+        /* 特殊的冷重启，在重启时传入一段数据
+        /* 这段数据是一个以空字符结尾的Unicode字符串, 其后接一个EFI_GUID表示重启类型
+        /* 固件可能会利用这段数据记录非正常的重启 */
+};
+
 enum EFI_ALLOCATE_TYPE {
   AllocateAnyPages,
   AllocateMaxAddress,
@@ -221,6 +239,34 @@ struct EFI_SYSTEM_TABLE {
   }                        *ConOut;
   UINTN                     _buf3[3];
   struct EFI_BOOT_SERVICES *BootServices;
+  struct EFI_RUNTIME_SERVICES {
+        char _buf_rs1[24];
+
+        //
+        // Time Services
+        //
+        unsigned long long _buf_rs2[4];
+
+        //
+        // Virtual Memory Services
+        //
+        unsigned long long _buf_rs3[2];
+
+        //
+        // Variable Services
+        //
+        unsigned long long _buf_rs4[3];
+
+        //
+        // Miscellaneous Services
+        //
+        unsigned long long _buf_rs5;
+        void (*ResetSystem)(enum EFI_RESET_TYPE ResetType,
+                            unsigned long long ResetStatus,
+                            unsigned long long DataSize,
+                            void *ResetData);
+    } * RuntimeServices;
+
 };
 
 struct EFI_SIMPLE_POINTER_STATE {
