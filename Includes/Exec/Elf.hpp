@@ -1,4 +1,5 @@
 // 创建于2024.10.14
+// RemeoOS ELF加载模块
 
 #ifndef _ELF_H_
 #define _ELF_H_
