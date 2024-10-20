@@ -68,6 +68,12 @@ EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_TABLE *Syste
     CopyLoadSegments(ehdr);
     entry_addr = ehdr->e_entry;
     
+    struct FrameBufferConfig config = 
+    {
+        (UINT8 *)GOP->Mode->FrameBufferBase, GOP->Mode->Info->PixelsPerScanLine,
+        GOP->Mode->Info->HorizontalResolution, GOP->Mode->Info->VerticalResolution    
+    };
+
     // 获取屏幕信息
     switch (GOP->Mode->Info->PixelFormat) 
     {
@@ -81,7 +87,7 @@ EFI_STATUS BootLoaderMain(EFI_HANDLE ImageHandle, struct EFI_SYSTEM_TABLE *Syste
             while (1);
     }
     puts((unsigned short *)L"[ SUCCESS ] Loading Graphics\r\n");
-
+    
     BOOT_CONFIG BootConfig;
     BootConfig.MemoryMap.MapSize = 4096;
     BootConfig.MemoryMap.Buffer = NULL;
