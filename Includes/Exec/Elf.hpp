@@ -4,7 +4,7 @@
 #define _ELF_H_
 
 #define PT_LOAD 1 // PT_LOAD值不变
-#include "../efi.h"
+#include "UEFI/UEFI.hpp"
 typedef struct
 {
     UINT32 p_type;        /* Segment type */
