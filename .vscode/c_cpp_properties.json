@@ -6,10 +6,9 @@
                 "${workspaceFolder}/Includes/**"
             ],
             "defines": [],
-            "compilerPath": "D:\\LuoYuDian\\APP\\Launage\\C++\\MinGW\\bin\\gcc.exe",
             "cStandard": "gnu23",
             "cppStandard": "c++23",
-            "intelliSenseMode": "linux-gcc-x64"
+            "intelliSenseMode": "windows-gcc-x64"
         }
     ],
     "version": 4
